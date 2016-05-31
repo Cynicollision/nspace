@@ -2,27 +2,31 @@
 
     var root = {};
 	
-    var nspace = function (namespace, value) {
+    function nspace(namespace, value) {
 		
 		var node = root,
+			qualifiedNodeName,
 			tokens;
 			
 		if (!root[namespace]) {
 			tokens = namespace.split('.');
+			value = value || {};
 			
 			if (tokens.length > 1) {
 			
 				for (var i = 0; i < tokens.length; i++) {
 
 					if (!node[tokens[i]]) {
-						node[tokens[i]] = (value && i === tokens.length - 1) ? value : {};
+						node[tokens[i]] = (i === tokens.length - 1) ? value : {};
 					}
 					
 					node = node[tokens[i]];
-
-					var qualifiedNodeName = tokens.slice(0, i + 1).join('.');
+					qualifiedNodeName = tokens.slice(0, i + 1).join('.');
 					root[qualifiedNodeName] = node;
 				}
+			}
+			else {
+				root[namespace] = value || {};
 			}
 		}
 		else if (value) {
@@ -30,7 +34,7 @@
 		}
 		
 		return root[namespace];
-    };
+    }
 
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         module.exports = nspace;
