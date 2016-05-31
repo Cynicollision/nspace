@@ -1,0 +1,27 @@
+{
+  "name": "nspace",
+  "version": "0.1.0",
+  "description": "JavaScript namespace-ifier",
+  "main": "nspace.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+	"grunt-contrib-jasmine": "^1.0.3",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cynicollision/nspace.git"
+  },
+  "author": "Sean Normoyle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Cynicollision/nspace/issues"
+  },
+  "homepage": "https://github.com/Cynicollision/nspace#readme"
+}

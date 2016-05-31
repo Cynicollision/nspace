@@ -1,2 +1,2 @@
-# nspace
-JavaScript module manager/namespace-ifier
+# nspace.js
+JavaScript namespace-ifier
