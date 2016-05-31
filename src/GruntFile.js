@@ -17,7 +17,7 @@
             test: {
                 src: 'nspace.js',
                 options: {
-                    specs: 'tests/nspace.test.js',
+                    specs: 'nspace.test.js',
                 },
             }
         },
