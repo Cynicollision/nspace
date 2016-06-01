@@ -35,7 +35,11 @@ Outputs:
 {"Services":{"FileService":{"someProperty":[1,2,3]}}}
 `
 
-The intended use would be to store entire JavaScript modules in this fashion, but for brevity a simple object literal was used here.
+The intended use would be to store entire JavaScript modules in this fashion, but for brevity a simple object literal was used here. 
 
 #### Installation
-(WIP)
+nspace.js is available as a NPM package:
+
+`npm install nspace`
+
+For an HTML page just include nspace.js or nspace.min.js in your scripts.
