@@ -15,8 +15,7 @@
 
         jasmine: {
             test: {
-				src: '../dist/nspace.min.js',
-				// src: 'nspace.js',
+                src: 'nspace.js',
                 options: {
                     specs: 'nspace.test.js',
                 },
