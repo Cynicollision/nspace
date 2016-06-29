@@ -2,16 +2,15 @@
 
     var root = {};
     
-    function nspace(namespace, value) {
-        
-        var node = root,
-            qualifiedNodeName,
-            tokens;
-            
-        if (!root[namespace]) {
-            tokens = namespace.split('.');
+    function nspace(namespace, valueOrDependencies, value) {
+
+        function defineModule() {
+            var tokens = namespace.split('.'),
+                node = root,
+                qualifiedNodeName;
+                
             value = value || {};
-            
+                
             if (tokens.length > 1) {
             
                 for (var i = 0; i < tokens.length; i++) {
@@ -28,6 +27,27 @@
             else {
                 root[namespace] = value || {};
             }
+        }
+        
+        function injectDependencies() {
+            var dependencies = [];
+            
+            for (var i = 0; i < valueOrDependencies.length; i++) {
+                dependencies.push(root[valueOrDependencies[i]]);
+            }
+            
+            value.apply(null, dependencies);
+        }
+            
+        if (!Array.isArray(valueOrDependencies)) {
+            value = valueOrDependencies;
+        }
+        else {
+            injectDependencies();
+        }
+            
+        if (!root[namespace]) {
+            defineModule();
         }
         
         return root[namespace];

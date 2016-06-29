@@ -78,5 +78,45 @@
                 expect(nspaceTests.namespaceParent.namespaceMember).toBe(testModule);
             });
         });
+        
+        describe('injects dependencies', function () {
+            
+            it('injects dependencies by name when defining a module', function () {
+                var theStuff, thePlans;
+            
+                nspace('MyApp.Service', [], function () {
+                    
+                    var Service = function () {
+                    };
+                    
+                    Service.getStuff = function () {
+                        return 'stuff!';
+                    };
+                    
+                    Service.prototype.getPlans = function () {
+                        return 'wickedness!';
+                    };
+                    
+                    return Service;
+                });
+                
+                nspace('MyApp.Consumer', 
+                    ['MyApp.Service'],
+                    function (Service) {
+                        var svc = Service();
+                        theStuff = svc.getStuff();
+                        
+                        // TODO: not how this should work
+                        thePlans = (new svc()).getPlans();
+                    }
+                    
+                );
+                
+                var Consumer = nspace('MyApp.Consumer');
+
+                expect(theStuff).toBe('stuff!');
+                expect(thePlans).toBe('wickedness!');
+            });
+        });
     });
 }());
