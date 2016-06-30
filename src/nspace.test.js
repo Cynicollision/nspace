@@ -80,42 +80,71 @@
         });
         
         describe('injects dependencies', function () {
+        
+            var data = 0;
             
             it('injects dependencies by name when defining a module', function () {
                 var theStuff, thePlans;
             
                 nspace('MyApp.Service', [], function () {
-                    
-                    var Service = function () {
-                    };
-                    
-                    Service.getStuff = function () {
-                        return 'stuff!';
-                    };
-                    
-                    Service.prototype.getPlans = function () {
-                        return 'wickedness!';
-                    };
+
+                    function Service(params) {
+
+                        var data = [];
+                        
+                        if (params && params.data) {
+                            data = params.data;
+                        }
+                        
+                        this.getDataPlusOne = function () {
+                            return data + 1;
+                        };
+                    }
                     
                     return Service;
                 });
-                
-                nspace('MyApp.Consumer', 
+
+                nspace('MyApp.Logic',
                     ['MyApp.Service'],
                     function (Service) {
-                        var svc = Service();
-                        theStuff = svc.getStuff();
                         
-                        // TODO: not how this should work
-                        thePlans = (new svc()).getPlans();
-                    }
-                    
-                );
-                
-                var Consumer = nspace('MyApp.Consumer');
+                        var svc = new Service({
+                            data: 100,
+                        });
+                        
+                        function Logic() {
+                        }
+                        
+                        Logic.getData = function () {
+                            return svc.getDataPlusOne();
+                        };
+                        
+                        return Logic;
+                    });
 
-                expect(theStuff).toBe('stuff!');
-                expect(thePlans).toBe('wickedness!');
+                nspace('MyApp.Consumer', 
+                    ['MyApp.Logic'],
+                    function (Logic) {
+                    
+                        function Consumer() {
+                            
+                            this.init = function () {
+                                data = Logic.getData();
+                            };
+                        }
+                        
+                        return Consumer;
+                        
+                    });
+                
+                
+                
+                    
+                // main.js
+                var Consumer = nspace('MyApp.Consumer');
+                (new Consumer()).init();
+
+                expect(data).toBe(101);
             });
         });
     });

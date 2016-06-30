@@ -3,7 +3,8 @@
     var root = {};
     
     function nspace(namespace, valueOrDependencies, value) {
-
+        
+        // defines the given namespace as a new module
         function defineModule() {
             var tokens = namespace.split('.'),
                 node = root,
@@ -29,6 +30,7 @@
             }
         }
         
+        // calls 'value' argument as module, passing the named module dependencies
         function injectDependencies() {
             var dependencies = [];
             
@@ -36,7 +38,7 @@
                 dependencies.push(root[valueOrDependencies[i]]);
             }
             
-            value.apply(null, dependencies);
+            value = value.apply(null, dependencies);
         }
             
         if (!Array.isArray(valueOrDependencies)) {
